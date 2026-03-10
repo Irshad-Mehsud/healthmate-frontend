@@ -31,9 +31,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      console.log('Login form submitted with:', formData);
       const response = await loginUser(formData);
-      console.log('Login response received:', response);
       
       // Use AuthContext login method with user data from response
       if (response && response.token) {
@@ -45,11 +43,8 @@ const Login = () => {
           contactNumber: response.data?.contactNumber,
           role: response.data?.role
         };
-        console.log('Calling login with userData:', userData);
         await login(userData, response.token);
         navigate("/dashboard", { replace: true });
-      } else {
-        console.log('No token in response');
       }
     } catch (err) {
       console.error('Login error:', err);

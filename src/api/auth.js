@@ -52,6 +52,19 @@ export const uploadReport = async (reportData) => {
   });
 };
 
+export const getReportAnalysis = (reportId) => {
+  return apiService.post(`/ai-insights/${reportId}`);
+}
+
+export const saveReportAnalysis = (reportId, analysisData) => {
+  return apiService.post(`/reports/${reportId}/analysis`, analysisData);
+}
+
+export const getReportDetails = (reportId) => {
+  return apiService.get(`/reports/details/${reportId}`);
+}
+
+
 export const getUserReports = (userId) => {
   return apiService.get(`/reports/${userId}`);
 };

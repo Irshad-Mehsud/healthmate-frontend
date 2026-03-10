@@ -8,11 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchUserData = async (userId, token) => {
-    console.log('fetchUserData called with:', { userId, token });
     try {
-      console.log('Making API call to getCurrentUser with userId:', userId);
       const userData = await getCurrentUser(userId);
-      console.log('Fetched user data:', userData);
       setUser({ ...userData, token });
     } catch (error) {
       console.error('Failed to fetch user data:', error);
@@ -29,12 +26,9 @@ export const AuthProvider = ({ children }) => {
     const userId = localStorage.getItem('userId');
     const storedUserData = localStorage.getItem('userData');
     
-    console.log('AuthContext useEffect - checking localStorage:', { token, userId, storedUserData });
-    
     if (token && storedUserData) {
       try {
         const userData = JSON.parse(storedUserData);
-        console.log('Restored user data from localStorage:', userData);
         setUser({ ...userData, token });
       } catch (error) {
         console.error('Failed to parse stored user data:', error);
@@ -43,15 +37,11 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('userId');
         localStorage.removeItem('userData');
       }
-    } else {
-      console.log('No complete user data found in localStorage');
     }
     setLoading(false);
   }, []);
 
   const login = async (userData, token) => {
-    console.log('Login called with:', { userData, token });
-    
     // Save token and user data to localStorage
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userData.id);
@@ -59,8 +49,6 @@ export const AuthProvider = ({ children }) => {
     
     // Set user data in context
     setUser({ ...userData, token });
-    
-    console.log('User data stored in localStorage and context');
   };
 
   const logout = () => {

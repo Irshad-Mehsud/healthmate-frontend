@@ -23,19 +23,16 @@ const Settings = () => {
 
   // Update form when user data changes
   useEffect(() => {
-    console.log('Settings useEffect - user data:', user);
     if (user) {
       const formData = {
         name: user.name || "",
         email: user.email || "",
         contactNumber: user.contactNumber || "",
       };
-      console.log('Setting form data:', formData);
       setForm(formData);
       
       const imageUrl = user.profilePicture || 
         `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=6366f1&color=fff`;
-      console.log('Setting profile image:', imageUrl);
       setProfileImage(imageUrl);
     }
   }, [user]);
@@ -51,8 +48,6 @@ const Settings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted with:', form);
-    
     setError("");
     setMessage("");
     setLoading(true);
@@ -64,13 +59,10 @@ const Settings = () => {
       formData.append("contactNumber", form.contactNumber);
       
       if (newProfileImage) {
-        console.log('Adding new profile image to form data');
         formData.append("profilePicture", newProfileImage);
       }
 
-      console.log('Calling updateUser API with userId:', user.id);
       const response = await updateUser(user.id, formData);
-      console.log('Update response:', response);
       
       // Update user data in AuthContext with response data or form data
       const updatedUserData = {
@@ -81,7 +73,6 @@ const Settings = () => {
         profilePicture: response.profilePicture || (newProfileImage ? profileImage : user.profilePicture),
       };
       
-      console.log('Updating user context with:', updatedUserData);
       setUser(updatedUserData);
       
       // Also update localStorage with new user data
