@@ -3,8 +3,10 @@ import axios from "axios";
 
 // Create instance
 const axiosInstance = axios.create({
-//   baseURL: "https://notes-app-backend-3ihupco1o-irshad-mehsuds-projects.vercel.app/", // your backend API base URL
-    baseURL: "http://localhost:5000/api/", // your backend API base URL
+  baseURL:
+    process.env.NODE_ENV === "production"
+      ? "https://healthmate-backend-three.vercel.app/"
+      : "http://localhost:5000/api/",
   withCredentials: true, // required for HTTP-only cookies
   headers: {
     "Content-Type": "application/json",
